@@ -172,7 +172,7 @@ def print_results(sqliteConnection,show_results, duration, passes):
             )
             record = cursor.fetchall()
             print("Primes are: ", record)
-        
+
         cursor.execute('''
             select count(*) from primes_table;
             '''
@@ -182,12 +182,16 @@ def print_results(sqliteConnection,show_results, duration, passes):
 
         if show_results:
             print()
-        print("Passes: %s, Time: %s, Avg: %s, Limit: %s, Count: %s, Valid: %s" % (passes, duration, duration/passes, limit, count, validate_results(limit,count)))
+        print(
+            f"Passes: {passes}, Time: {duration}, Avg: {duration / passes}, Limit: {limit}, Count: {count}, Valid: {validate_results(limit, count)}"
+        )
 
         # Following 2 lines added by to conform to drag race output format
         print()
-        print("fvbakel_sqlite; %s;%s;1;algorithm=other,faithful=no,bits=8" % (passes, duration))
-          
+        print(
+            f"fvbakel_sqlite; {passes};{duration};1;algorithm=other,faithful=no,bits=8"
+        )
+
     except sqlite3.Error as error:
         print("Error in print_primes", error)
         return None
@@ -204,11 +208,7 @@ def validate_results(limit,count):                      # Check to see if this i
     """Look up our count of primes in the historical data (if we have it)
     to see if it matches"""
 
-    if limit in prime_counts:                # the data, and (b) our count matches. Since it will return
-        return prime_counts[limit] == count  # false for an unknown upper_limit, can't assume false == bad
-    else:
-        return 'unkown'
-    return False
+    return prime_counts[limit] == count if limit in prime_counts else 'unkown'
 
 # MAIN Entry
 if __name__ == "__main__":

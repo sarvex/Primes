@@ -242,13 +242,13 @@ class TestPrintResults(unittest.TestCase):
         sieve = PrimeSieve(10)
         sieve.run_sieve()
 
-        sieve.get_primes = lambda: (i for i in range(3))
+        sieve.get_primes = lambda: iter(range(3))
         output = self.get_print_results_output(sieve, False, 1, 1)
         results = self.parse_results(output)
         self.assertIn("Count", results)
         self.assertEqual(results["Count"], "3")
 
-        sieve.get_primes = lambda: (i for i in range(10))
+        sieve.get_primes = lambda: iter(range(10))
         output = self.get_print_results_output(sieve, False, 1, 1)
         results = self.parse_results(output)
         self.assertIn("Count", results)

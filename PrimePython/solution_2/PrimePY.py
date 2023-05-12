@@ -88,15 +88,17 @@ class PrimeSieve:
         for num in self.get_primes():  # Count (and optionally dump) the primes that were found below the limit
             count += 1
             if show_results:
-                print("%s, " % num, end="")
+                print(f"{num}, ", end="")
 
         if show_results:
             print()
-        print("Passes: %s, Time: %s, Avg: %s, Limit: %s, Count: %s, Valid: %s" % (passes, duration, duration/passes, self._size, count, self.validate_results()))
+        print(
+            f"Passes: {passes}, Time: {duration}, Avg: {duration / passes}, Limit: {self._size}, Count: {count}, Valid: {self.validate_results()}"
+        )
 
         # Following 2 lines added by rbergen to conform to drag race output format
         print();
-        print("ssovest; %s;%s;1;algorithm=base,faithful=yes,bits=8" % (passes, duration));
+        print(f"ssovest; {passes};{duration};1;algorithm=base,faithful=yes,bits=8");
 
 
 # MAIN Entry
